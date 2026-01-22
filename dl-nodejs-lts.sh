@@ -15,7 +15,7 @@ cd "${_tmp_dir}"
 # https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.xz
 _nodejs_lts_ver="$(wget -qO- 'https://nodejs.org/en/download' | sed 's/"/\n/g' | grep '(LTS)' | sed 's/[<>]/\n/g' | grep '(LTS)' | grep -i '^v' | sed 's/^[Vv]//g; s/ (.*//g' | sort -V | tail -n1)"
 wget -q -c -t 9 -T 9 "https://nodejs.org/dist/v${_nodejs_lts_ver}/node-v${_nodejs_lts_ver}-linux-x64.tar.xz"
-/bin/ls -la
+/bin/ls -lah
 tar -xof node-*.tar*
 sleep 1
 rm -f node-*.tar*
