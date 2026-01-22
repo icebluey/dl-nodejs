@@ -61,6 +61,7 @@ sleep 1
 /opt/node/bin/codex --version
 /opt/node/bin/node -e "console.log(process.versions)"
 /opt/node/bin/npm version
+/opt/node/bin/npm ls -g
 
 /bin/ls -la /opt/node/bin/
 /bin/ls -la /opt/node/lib/
