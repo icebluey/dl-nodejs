@@ -37,7 +37,7 @@ jobs:
           sudo rm -fr /tmp/*
           sudo df -Th
 
-      - name: dl
+      - name: Download
         run: sudo /bin/bash dl-nodejs-lts.sh
 
       - name: Generate release tag env
