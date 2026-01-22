@@ -57,9 +57,14 @@ fi
 
 # openai/codex
 /opt/node/bin/npm install -g @openai/codex@latest
+sleep 1
+echo
+/opt/node/bin/codex --version
+echo
 
 /bin/ls -la /opt/node/bin/
 /bin/ls -la /opt/node/lib/
+/bin/ls -la /opt/node/lib/node_modules/
 
 cd /opt
 sleep 1
