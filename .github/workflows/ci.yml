@@ -48,7 +48,7 @@ jobs:
       - name: Upload files
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env._release_ver }}lts
+          tag_name: v${{ env._release_ver }}-lts
           files: /tmp/_output_lts/node*.tar.xz*
           overwrite_files: true
 
