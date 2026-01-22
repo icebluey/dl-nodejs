@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+TZ='UTC'; export TZ
+
+set -euo pipefail
+
+rm -fr ~/.node_repl_history
+rm -fr ~/.npm
+rm -fr ~/.npmrc
+rm -fr /tmp/node-compile*
+
+_tmp_dir="$(mktemp -d)"
+cd "${_tmp_dir}"
+
+# https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.xz
+_nodejs_lts_ver="$(wget -qO- 'https://nodejs.org/en/download' | sed 's/"/\n/g' | grep '(LTS)' | sed 's/[<>]/\n/g' | grep '(LTS)' | grep -i '^v' | sed 's/^[Vv]//g; s/ (.*//g' | sort -V | tail -n1)"
+wget -q -c -t 9 -T 9 "https://nodejs.org/dist/v${_nodejs_lts_ver}/node-v${_nodejs_lts_ver}-linux-x64.tar.xz"
+/bin/ls -la
+tar -xof node-*.tar*
+sleep 1
+rm -f node-*.tar*
+cd node-*
+ln -sv node_modules lib/node
+
+echo '# nodejs
+nodejshome='\''/opt/node'\''
+PATH=$nodejshome/bin:$PATH
+LD_LIBRARY_PATH=$nodejshome/lib:$LD_LIBRARY_PATH
+export nodejshome
+export PATH
+export LD_LIBRARY_PATH' > .env
+chmod 0644 .env
+
+cd ..
+rm -fr /opt/node
+mv -v node-* /opt/node
+
+# nodejs
+nodejshome='/opt/node'
+PATH=$nodejshome/bin:$PATH
+LD_LIBRARY_PATH=$nodejshome/lib:$LD_LIBRARY_PATH
+export nodejshome
+export PATH
+export LD_LIBRARY_PATH
+
+_orig_npm_ver="$(/opt/node/bin/npm -v)"
+_new_npm_ver="$(wget -qO- 'https://github.com/npm/cli/tags/' | grep -i '<a href="/npm/cli/releases/tag/v' | sed 's|.*<a href="/npm/cli/releases/tag/v||g' | sed 's/".*//g' | sort -V | uniq | tail -n 1)"
+if [[ -z "${_new_npm_ver}" ]]; then
+    echo ' null _new_npm_ver'
+    exit 1
+fi
+
+if [ "$(printf '%s\n' "${_orig_npm_ver}" "${_new_npm_ver}" | sort -V | tail -n1)" = "${_new_npm_ver}" ]; then
+    /opt/node/bin/npm install -g npm@"${_new_npm_ver}"
+    echo
+    sleep 1
+    _new_npm_ver="$(/opt/node/bin/npm -v)"
+    echo "old npm version: ${_orig_npm_ver}"
+    echo "new npm version: ${_new_npm_ver}"
+fi
+
+# openai/codex
+/opt/node/bin/npm install -g @openai/codex@latest
+
+cd /opt
+sleep 1
+mv -f node "node-v${_nodejs_lts_ver}-linux-x64"
+echo
+sleep 1
+#tar -Jcf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar.xz" "node-v${_nodejs_lts_ver}-linux-x64"
+#tar -cf - "node-v${_nodejs_lts_ver}-linux-x64" | zstd -f -12 -o /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar.zst"
+
+tar -cvf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar" "node-v${_nodejs_lts_ver}-linux-x64"
+cd /tmp
+sleep 1
+xz -f -z -9 -k -T$(nproc) -v "node-v${_nodejs_lts_ver}-linux-x64.tar"
+sleep 1
+rm -fr _output_lts
+mkdir _output_lts
+mv -f "node-v${_nodejs_lts_ver}-linux-x64.tar.xz" _output_lts/
+echo
+sleep 1
+rm -f "node-v${_nodejs_lts_ver}"*
+
+cd /tmp
+rm -fr "${_tmp_dir}"
+rm -fr ~/.node_repl_history
+rm -fr ~/.npm
+rm -fr ~/.npmrc
+rm -fr /tmp/node-compile*
+
+echo
+echo ' done'
+echo
+exit
