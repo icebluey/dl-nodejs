@@ -62,6 +62,9 @@ fi
 # openai/codex
 /opt/node/bin/npm install -g @openai/codex@latest
 
+/bin/ls -la /opt/node/bin/
+/bin/ls -la /opt/node/lib/
+
 cd /opt
 sleep 1
 mv -f node "node-v${_nodejs_lts_ver}-linux-x64"
