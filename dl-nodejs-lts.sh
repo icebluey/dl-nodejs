@@ -24,8 +24,7 @@ ln -sv node_modules lib/node
 
 echo '# nodejs
 export nodejshome='\''/opt/node'\''
-export PATH=$nodejshome/bin:$PATH
-export LD_LIBRARY_PATH=$nodejshome/lib:$LD_LIBRARY_PATH' > .env
+export PATH=$nodejshome/bin:$PATH' > .env
 chmod 0644 .env
 
 cd ..
@@ -35,7 +34,6 @@ mv -v node-* /opt/node
 # nodejs
 export nodejshome='/opt/node'
 export PATH=$nodejshome/bin:$PATH
-export LD_LIBRARY_PATH=$nodejshome/lib:$LD_LIBRARY_PATH
 
 _orig_npm_ver="$(/opt/node/bin/npm -v)"
 _new_npm_ver="$(wget -qO- 'https://github.com/npm/cli/tags/' | grep -i '<a href="/npm/cli/releases/tag/v' | sed 's|.*<a href="/npm/cli/releases/tag/v||g' | sed 's/".*//g' | sort -V | uniq | tail -n 1)"
