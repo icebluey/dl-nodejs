@@ -74,7 +74,6 @@ sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".xz > "node-v${_nodejs_lts_
 rm -fr _output_lts
 mkdir _output_lts
 mv -f "node-v${_nodejs_lts_ver}-linux-x64.tar".xz* _output_lts/
-echo
 sleep 1
 rm -f "node-v${_nodejs_lts_ver}"*
 
