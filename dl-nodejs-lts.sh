@@ -30,10 +30,9 @@ export PATH' > .env
 chmod 0644 .env
 
 cd ..
+
 rm -fr /opt/node
 mv -v node-* /opt/node
-
-cd /opt/node
 
 # nodejs
 NODEJS_HOME='/opt/node'
