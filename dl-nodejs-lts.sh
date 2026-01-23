@@ -33,6 +33,8 @@ cd ..
 rm -fr /opt/node
 mv -v node-* /opt/node
 
+cd /opt/node
+
 # nodejs
 NODEJS_HOME='/opt/node'
 export NODEJS_HOME
@@ -59,7 +61,7 @@ fi
 /opt/node/bin/npm install -g @openai/codex@latest
 sleep 1
 /opt/node/bin/codex --version
-/opt/node/bin/node -e "console.log(process.versions)"
+/opt/node/bin/node -p process.versions
 /opt/node/bin/npm version
 /opt/node/bin/npm ls -g
 
