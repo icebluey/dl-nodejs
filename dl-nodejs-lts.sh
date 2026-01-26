@@ -7,7 +7,7 @@ set -euo pipefail
 rm -fr ~/.node_repl_history
 rm -fr ~/.npm
 rm -fr ~/.npmrc
-rm -fr /tmp/node-compile*
+rm -fr /tmp/node-*
 
 _tmp_dir="$(mktemp -d)"
 cd "${_tmp_dir}"
@@ -76,16 +76,17 @@ sleep 1
 #tar -Jcf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar.xz" "node-v${_nodejs_lts_ver}-linux-x64"
 #tar -cf - "node-v${_nodejs_lts_ver}-linux-x64" | zstd -f -12 -o /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar.zst"
 
-tar -cvf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar" "node-v${_nodejs_lts_ver}-linux-x64"
+tar -cf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar" "node-v${_nodejs_lts_ver}-linux-x64"
 cd /tmp
 sleep 1
-xz -f -z -9 -k -T$(nproc) -v "node-v${_nodejs_lts_ver}-linux-x64.tar"
+xz -f -z -9 -k -T$(nproc) "node-v${_nodejs_lts_ver}-linux-x64.tar"
 sleep 1
 sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".xz > "node-v${_nodejs_lts_ver}-linux-x64.tar".xz.sha256
-rm -fr _output_lts
-mkdir _output_lts
-mv -f "node-v${_nodejs_lts_ver}-linux-x64.tar".xz* _output_lts/
+rm -fr /tmp/_output_lts
+mkdir /tmp/_output_lts
+mv -f "node-v${_nodejs_lts_ver}-linux-x64.tar".xz* /tmp/_output_lts/
 sleep 1
+/bin/ls -lh /tmp/_output_lts/
 rm -f "node-v${_nodejs_lts_ver}"*
 
 cd /tmp
