@@ -79,8 +79,8 @@ sleep 1
 tar -cf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar" "node-v${_nodejs_lts_ver}-linux-x64"
 cd /tmp
 sleep 1
-xz -f -z -9 -k -T$(nproc) "node-v${_nodejs_lts_ver}-linux-x64.tar"
-sleep 1
+xz -f -z -9 -k -T$(($(nproc) - 1)) "node-v${_nodejs_lts_ver}-linux-x64.tar"
+sleep 2
 sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".xz > "node-v${_nodejs_lts_ver}-linux-x64.tar".xz.sha256
 rm -fr /tmp/_output_lts
 mkdir /tmp/_output_lts
