@@ -7,7 +7,7 @@ set -euo pipefail
 rm -fr ~/.node_repl_history
 rm -fr ~/.npm
 rm -fr ~/.npmrc
-rm -fr /tmp/node-*
+rm -fr /tmp/node*
 
 _tmp_dir="$(mktemp -d)"
 cd "${_tmp_dir}"
@@ -31,8 +31,8 @@ chmod 0644 .env
 
 cd ..
 
-rm -fr /opt/node
-mv -v node-* /opt/node
+rm -fr /opt/node*
+mv node-* /opt/node
 
 # nodejs
 NODEJS_HOME='/opt/node'
@@ -69,10 +69,8 @@ sleep 1
 /bin/ls -la /opt/node/lib/node_modules/
 
 cd /opt
-sleep 1
-mv -f node "node-v${_nodejs_lts_ver}-linux-x64"
-echo
-sleep 1
+mv node "node-v${_nodejs_lts_ver}-linux-x64"
+
 #tar -Jcf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar.xz" "node-v${_nodejs_lts_ver}-linux-x64"
 #tar -cf - "node-v${_nodejs_lts_ver}-linux-x64" | zstd -f -12 -o /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar.zst"
 
@@ -80,21 +78,20 @@ tar -cf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar" "node-v${_nodejs_lts_ver}-
 cd /tmp
 sleep 1
 xz -f -z -9 -k -T$(($(nproc) - 1)) "node-v${_nodejs_lts_ver}-linux-x64.tar"
-sleep 2
+sleep 1
 sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".xz > "node-v${_nodejs_lts_ver}-linux-x64.tar".xz.sha256
+
 rm -fr /tmp/_output_lts
 mkdir /tmp/_output_lts
-mv -f "node-v${_nodejs_lts_ver}-linux-x64.tar".xz* /tmp/_output_lts/
-sleep 1
+mv node-*.tar.* /tmp/_output_lts/
 /bin/ls -lh /tmp/_output_lts/
-rm -f "node-v${_nodejs_lts_ver}"*
 
 cd /tmp
 rm -fr "${_tmp_dir}"
 rm -fr ~/.node_repl_history
 rm -fr ~/.npm
 rm -fr ~/.npmrc
-rm -fr /tmp/node-compile*
+rm -fr /tmp/node*
 
 echo
 echo ' done'
