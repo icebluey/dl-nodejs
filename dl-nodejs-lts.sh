@@ -56,10 +56,12 @@ if [ "$(printf '%s\n' "${_orig_npm_ver}" "${_new_npm_ver}" | sort -V | tail -n1)
     echo "new npm version: ${_new_npm_ver}"
 fi
 
-# openai/codex
+# openai codex
 /opt/node/bin/npm install -g @openai/codex@latest
-sleep 1
-/opt/node/bin/codex --version
+
+# google gemini
+/opt/node/bin/npm install -g @google/gemini-cli@latest
+
 /opt/node/bin/node -p process.versions
 /opt/node/bin/npm version
 /opt/node/bin/npm ls -g
