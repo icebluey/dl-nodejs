@@ -59,9 +59,6 @@ fi
 # openai codex
 /opt/node/bin/npm install -g @openai/codex@latest
 
-# google gemini
-/opt/node/bin/npm install -g @google/gemini-cli@latest
-
 /opt/node/bin/node -p process.versions
 /opt/node/bin/npm version
 /opt/node/bin/npm ls -g
