@@ -15,23 +15,11 @@ jobs:
       - name: Setup
         run: |
           sudo apt update -y -qqq
-          sudo apt autoremove --purge -y needrestart || : 
-          sudo systemctl stop postgresql.service mysql.service mysqld.service >/dev/null 2>&1 || : 
-          sudo systemctl disable postgresql.service mysql.service mysqld.service >/dev/null 2>&1 || : 
-          sudo apt autoremove --purge -y '^postgresql.*' '^mysql.*'
-          sudo systemctl stop snapd.service snapd.socket >/dev/null 2>&1 || : 
-          sudo systemctl disable snapd.service snapd.socket >/dev/null 2>&1 || : 
-          sudo apt autoremove --purge -y '^php.*' '^lxd.*' '^snap.*'
-          sudo rm -fr ~/snap /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd
-          sudo systemctl stop docker.service containerd.service >/dev/null 2>&1 || : 
-          sudo systemctl disable docker.service containerd.service >/dev/null 2>&1 || : 
-          sudo apt autoremove --purge -y '^docker.*' '^container.*' '^podman.*' crun runc
-          sudo rm -fr /var/lib/docker* /var/lib/containerd /usr/libexec/docker
-          sudo apt autoremove --purge -y --allow-remove-essential $(dpkg -l | grep -i -E 'firefox|firebird|google-chrome-stable' | awk '{print $2}' | sort -V | uniq | paste -sd" ")
-          sudo apt install -y chrony; sudo systemctl start chrony; sleep 10; sudo chronyc makestep
-          sudo apt install -y -qqq bash wget ca-certificates curl git openssl binutils coreutils util-linux findutils diffutils patch sed gawk grep file gzip bzip2 xz-utils tar
-          sudo apt reinstall -y -qqq bash wget ca-certificates curl git openssl binutils coreutils util-linux findutils diffutils patch sed gawk grep file gzip bzip2 xz-utils tar
-          #sudo apt upgrade -y -qqq
+          sudo apt autoremove --purge -y needrestart || true
+          sudo apt install -y bash wget curl openssl
+          sudo ln -svf bash /bin/sh
+          sudo wget https://raw.githubusercontent.com/icebluey/docker/refs/heads/master/scripts/clean-os.sh -O /tmp/clean-os.sh
+          sudo bash /tmp/clean-os.sh
           sudo ln -svf bash /bin/sh
           sudo rm -fr /tmp/*
           sudo df -Th
