@@ -56,8 +56,11 @@ if [ "$(printf '%s\n' "${_orig_npm_ver}" "${_new_npm_ver}" | sort -V | tail -n1)
     echo "new npm version: ${_new_npm_ver}"
 fi
 
-# openai codex
+# OpenAI Codex
 /opt/node/bin/npm install -g @openai/codex@latest
+
+# OpenCode
+/opt/node/bin/npm install -g opencode-ai@latest
 
 /opt/node/bin/node -p process.versions
 /opt/node/bin/npm version
