@@ -40,6 +40,8 @@ export NODEJS_HOME
 PATH=$NODEJS_HOME/bin:$PATH
 export PATH
 
+/opt/node/bin/npm ls -g
+
 _orig_npm_ver="$(/opt/node/bin/npm -v)"
 _new_npm_ver="$(wget -qO- 'https://github.com/npm/cli/tags/' | grep -i '<a href="/npm/cli/releases/tag/v' | sed 's|.*<a href="/npm/cli/releases/tag/v||g' | sed 's/".*//g' | sort -V | uniq | tail -n 1)"
 if [[ -z "${_new_npm_ver}" ]]; then
