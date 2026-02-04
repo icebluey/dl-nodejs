@@ -60,10 +60,10 @@ fi
 
 # OpenAI Codex
 /opt/node/bin/npm install -g @openai/codex@latest
-
+sleep 5
 # OpenCode
 /opt/node/bin/npm install -g opencode-ai@latest
-
+sleep 5
 /opt/node/bin/node -p process.versions
 /opt/node/bin/npm version
 /opt/node/bin/npm ls -g
