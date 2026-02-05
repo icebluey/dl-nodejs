@@ -29,7 +29,7 @@ jobs:
 
       - name: Generate release tag env
         run: |
-          _release_ver="$(/bin/ls -1 /tmp/_output_lts/node*.tar.xz | sed 's/-/\n/g' | grep -iEv '^x|/|lin' | grep -oE '([0-9]+)\.([0-9]+)\.([0-9]+)' | tail -n1)"
+          _release_ver="$(/bin/ls -1 /tmp/_output_lts/node*.tar.* | grep -iv sha256 | sed 's/-/\n/g' | grep -iEv '^x|/|lin' | grep -oE '([0-9]+)\.([0-9]+)\.([0-9]+)' | tail -n1)"
           echo "_release_ver=${_release_ver}" >> $GITHUB_ENV
 
       - name: Upload files
