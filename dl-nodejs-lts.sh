@@ -81,10 +81,11 @@ mv node "node-v${_nodejs_lts_ver}-linux-x64"
 tar -cf /tmp/"node-v${_nodejs_lts_ver}-linux-x64.tar" "node-v${_nodejs_lts_ver}-linux-x64"
 cd /tmp
 sleep 1
-xz -f -z -9 -k -T$(($(nproc) - 1)) "node-v${_nodejs_lts_ver}-linux-x64.tar"
-###zstd -f -9 -k -o "node-v${_nodejs_lts_ver}-linux-x64.tar".zst "node-v${_nodejs_lts_ver}-linux-x64.tar"
-sleep 1
-sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".xz > "node-v${_nodejs_lts_ver}-linux-x64.tar".xz.sha256
+#xz -f -z -9 -k -T$(($(nproc) - 1)) "node-v${_nodejs_lts_ver}-linux-x64.tar"
+zstd -f -20 -k -o "node-v${_nodejs_lts_ver}-linux-x64.tar".zst "node-v${_nodejs_lts_ver}-linux-x64.tar"
+sleep 2
+#sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".xz > "node-v${_nodejs_lts_ver}-linux-x64.tar".xz.sha256
+sha256sum -b "node-v${_nodejs_lts_ver}-linux-x64.tar".zst > "node-v${_nodejs_lts_ver}-linux-x64.tar".zst.sha256
 
 rm -f node-*.tar
 rm -fr /tmp/_output_lts
