@@ -60,17 +60,16 @@ fi
 
 # OpenAI Codex
 /opt/node/bin/npm install -g @openai/codex@latest
-sleep 5
+
 # OpenCode
 /opt/node/bin/npm install -g opencode-ai@latest
-sleep 5
+
+# bun , bunx
+/opt/node/bin/npm install -g bun
+
 /opt/node/bin/node -p process.versions
 /opt/node/bin/npm version
 /opt/node/bin/npm ls -g
-
-/bin/ls -la /opt/node/bin/
-/bin/ls -la /opt/node/lib/
-/bin/ls -la /opt/node/lib/node_modules/
 
 cd /opt
 mv node "node-v${_nodejs_lts_ver}-linux-x64"
