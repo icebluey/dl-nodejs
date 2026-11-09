@@ -13,7 +13,7 @@ _tmp_dir="$(mktemp -d)"
 cd "${_tmp_dir}"
 
 # https://nodejs.org/dist/v24.13.0/node-v24.13.0-linux-x64.tar.xz
-_nodejs_lts_ver="$(wget -qO- 'https://nodejs.org/en/download' | sed 's/"/\n/g' | grep '(LTS)' | sed 's/[<>]/\n/g' | grep '(LTS)' | grep -i '^v' | sed 's/^[Vv]//g; s/ (.*//g' | sort -V | tail -n1)"
+_nodejs_lts_ver="$(wget -qO- 'https://nodejs.org/en/download' | grep -i lts | sed 's/,/\n/g' | grep -i lts -A 10 -B 10 | grep -i '/blog/release/v' | grep -ivE 'alpha|beta|rc|previous-releases' | grep -i href | sed 's|[/\]|\n|g' | grep '^v' | sort -V | uniq | tail -n1 | sed 's/^v//g')"
 wget -q -c -t 9 -T 9 "https://nodejs.org/dist/v${_nodejs_lts_ver}/node-v${_nodejs_lts_ver}-linux-x64.tar.xz"
 /bin/ls -lah
 tar -xof node-*.tar*
